@@ -1,35 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingTop="?attr/actionBarSize"
+    android:padding="16dp"
+    android:importantForAccessibility="no"> <!-- Ignore for screen readers -->
 
-    <!-- Tiêu đề nhật ký -->
+
+<LinearLayout
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
+
+<!-- Title Label -->
+<TextView
+    android:id="@+id/tvTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Title"
+    android:textSize="16sp"
+    android:layout_marginBottom="4dp" />
+
+<!-- Title Input -->
     <EditText
         android:id="@+id/editTextDiaryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Title" />
+        android:minHeight="48dp"
+        android:hint="Enter Title"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:inputType="text" />
 
-    <!-- Nội dung nhật ký -->
-    <EditText
-        android:id="@+id/editTextDiaryContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="Start writing"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:minLines="10" />
+<!-- Content Label -->
+<TextView
+    android:id="@+id/tvContent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Content"
+    android:textSize="16sp"
+    android:layout_marginBottom="4dp" />
 
-    <!-- Nút lưu nhật ký -->
-    <Button
-        android:id="@+id/btnSaveEntry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save Entry"
-        android:onClick="saveDiaryEntry"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp" />
+<!-- Content Input -->
+<EditText
+    android:id="@+id/editTextDiaryContent"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:hint="Enter Content"
+    android:inputType="textMultiLine"
+    android:gravity="top|start"
+    android:padding="10dp"
+    android:background="@android:drawable/editbox_background"
+    android:layout_marginBottom="24dp" />
+
+<!-- Save Button -->
+<Button
+    android:id="@+id/buttonSave"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Save"
+    android:onClick="saveDiaryEntry"
+    android:backgroundTint="@android:color/holo_blue_light"
+    android:textColor="@android:color/white"
+    android:padding="12dp" />
 
 </LinearLayout>
+    </ScrollView>
