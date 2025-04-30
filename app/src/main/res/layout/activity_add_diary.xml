@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Tiêu đề nhật ký -->
+    <EditText
+        android:id="@+id/editTextDiaryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title" />
+
+    <!-- Nội dung nhật ký -->
+    <EditText
+        android:id="@+id/editTextDiaryContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Start writing"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:minLines="10" />
+
+    <!-- Nút lưu nhật ký -->
+    <Button
+        android:id="@+id/btnSaveEntry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Entry"
+        android:onClick="saveDiaryEntry"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
