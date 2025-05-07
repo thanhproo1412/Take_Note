@@ -4,4 +4,8 @@
     <string name="add_note">Add Note</string>
     <string name="you_don_t_have_any_notes_yet">You don\'t have any notes yet.</string>
     <string name="please_log_in_to_access_your_notes">Please log in to access your notes</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+
+
 </resources>

@@ -6,12 +6,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
+import androidx.core.view.GravityCompat;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.view.MenuItem;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+
 
 import java.util.ArrayList;
 
@@ -24,36 +31,72 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabAddEntry;
     private TextView tvNoNotesMessage;
     private TextView tvLoginMessage;
+    private DrawerLayout drawerLayout; // DrawerLayout to manage the sidebar
+    private ActionBarDrawerToggle toggle; // ActionBarDrawerToggle to toggle sidebar
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // create views
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+
+        // Xử lý sự kiện khi người dùng chọn mục
+        // Inside your MainActivity class
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId(); // Get the item ID
+
+                if (itemId == R.id.nav_home) {
+                    // Handle Home navigation
+                    Toast.makeText(MainActivity.this, "Home selected", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (itemId == R.id.nav_notes) {
+                    // Handle Notes navigation
+                    Toast.makeText(MainActivity.this, "Notes selected", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (itemId == R.id.nav_profile) {
+                    // Handle Profile navigation
+                    Toast.makeText(MainActivity.this, "Profile selected", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        // Initialize views
         recyclerView = findViewById(R.id.recyclerViewNotes);
         tvLoginMessage = findViewById(R.id.tvLoginMessage);
         tvNoNotesMessage = findViewById(R.id.tvNoNotesMessage);
         fabAddEntry = findViewById(R.id.fab_add_entry);
 
-        //  RecyclerView
+        // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // create diary list
+        // Initialize database and note list
         dbHelper = new NoteDatabaseHelper(this);
         noteList = new ArrayList<>();
         adapter = new NoteAdapter(noteList);
         recyclerView.setAdapter(adapter);
 
-        // Check login status and diary data
+        // Set up ActionBar
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true); // Enable the hamburger icon
+        }
+
+        // Check login status and load notes
         checkLoginStatus();
 
-        // Func when click button +
+        // Floating action button click to add a new note
         fabAddEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, AddDiaryActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, AddDiaryActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -65,7 +108,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)) {
+            return true; // Handle drawer toggle
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -76,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Check login status and diary data to display to screen
+    // Check login status and display notes accordingly
     private void checkLoginStatus() {
         if (!isLoggedIn()) {
             tvLoginMessage.setVisibility(View.VISIBLE);
@@ -88,24 +138,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // using SharedPreferences to check
+    // Check if the user is logged in using SharedPreferences
     private boolean isLoggedIn() {
         return getSharedPreferences("user_preferences", MODE_PRIVATE)
                 .getBoolean("is_logged_in", false);
     }
 
-    // Load data from db
+    // Load notes from the database
     private void loadNotes() {
-        noteList.clear();  // clear current list
+        noteList.clear(); // Clear the current list
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query("notes", null, null, null, null, null, "id DESC");
 
         if (cursor.getCount() == 0) {
-            // if there is no note, display msg "tvNoNotesMessage"
             tvNoNotesMessage.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         } else {
-            // if have any note, display it
             tvNoNotesMessage.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
@@ -119,4 +167,16 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout != null) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return; // Prevent calling super.onBackPressed()
+            }
+        }
+        super.onBackPressed(); // Call the default back button behavior
+    }
+
 }
