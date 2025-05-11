@@ -33,6 +33,7 @@ dependencies {
     implementation libs.recyclerview
     implementation libs.drawerlayout
     implementation libs.annotation
+    implementation libs.cardview
 
     implementation libs.appcompat
     implementation libs.material

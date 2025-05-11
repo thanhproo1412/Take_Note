@@ -1,6 +1,7 @@
 [versions]
 agp = "8.9.1"
 annotation = "1.9.1"
+cardview = "1.0.0"
 constraintlayoutVersion = "2.0.4"
 drawerlayout = "1.2.0"
 fontawesomeTypeface = "5.15.4.2"
@@ -19,6 +20,7 @@ recyclerview = "1.4.0"
 
 [libraries]
 annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 constraintlayout-v204 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
 drawerlayout = { module = "androidx.drawerlayout:drawerlayout", version.ref = "drawerlayout" }
 fontawesome-typeface = { module = "com.mikepenz:fontawesome-typeface", version.ref = "fontawesomeTypeface" }
