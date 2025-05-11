@@ -37,7 +37,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Enter your username"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    tools:ignore="TouchTargetSizeCheck" />
             </TableRow>
 
             <!-- Email Field -->
@@ -58,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Enter your email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    tools:ignore="TouchTargetSizeCheck" />
             </TableRow>
 
             <!-- Password Field -->
@@ -79,7 +81,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Enter your password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    tools:ignore="TouchTargetSizeCheck" />
             </TableRow>
 
             <!-- Confirm Password Field -->
@@ -100,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Confirm your password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    tools:ignore="TouchTargetSizeCheck" />
             </TableRow>
 
             <!-- Submit Button -->
