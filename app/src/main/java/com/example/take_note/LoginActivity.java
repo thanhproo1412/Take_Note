@@ -1,5 +1,6 @@
 package com.example.take_note;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -15,6 +16,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText editTextUsername;
     private TextInputEditText editTextPassword;
     private MaterialButton buttonLogin;
+    private MaterialButton buttonSignUp;
+    private MaterialButton buttonForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
+        buttonSignUp = findViewById(R.id.buttonSignUp);
+        buttonForgotPassword = findViewById(R.id.buttonForgotPassword);
 
         // Display back button in Action Bar
         if (getSupportActionBar() != null) {
@@ -35,6 +40,12 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up login button click listener
         buttonLogin.setOnClickListener(v -> handleLogin());
+
+        // Set up sign up button click listener
+        buttonSignUp.setOnClickListener(v -> navigateToSignUp());
+
+        // Set up forgot password button click listener
+        buttonForgotPassword.setOnClickListener(v -> navigateToForgotPassword());
     }
 
     // Handle Login logic
@@ -60,6 +71,19 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
             // Proceed to main app activity (navigate to another activity or fragment)
         }
+    }
+
+    // Handle Sign Up button click
+    private void navigateToSignUp() {
+        Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
+    // Handle Forgot Password button click
+    private void navigateToForgotPassword() {
+        // Redirect to Forgot Password activity
+        Toast.makeText(this, "Navigate to Forgot Password", Toast.LENGTH_SHORT).show();
+        // Example: startActivity(new Intent(this, ForgotPasswordActivity.class));
     }
 
     // Handle when user clicks back
