@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="12dp">
@@ -6,9 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@android:color/white"
         android:elevation="2dp"
+        android:orientation="vertical"
         android:padding="12dp">
 
         <TextView
@@ -16,15 +17,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="User Name"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvPostContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is a sample post content."
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            android:text="This is a sample post content." />
 
         <ImageView
             android:id="@+id/imgPost"
@@ -38,10 +39,42 @@
             android:id="@+id/tvPostTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="2 giờ trước"
-            android:textSize="12sp"
             android:textColor="@android:color/darker_gray"
-            android:layout_marginTop="4dp" />
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <!-- Like Button -->
+            <ImageButton
+                android:id="@+id/btnLike"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Thích"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_like"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <!-- Share Button -->
+            <ImageButton
+                android:id="@+id/btnShare"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Chia sẻ"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_share"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>
