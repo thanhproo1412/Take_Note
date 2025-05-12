@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import android.widget.CheckBox;
 
 public class ProfileFragment extends Fragment {
 
@@ -21,6 +22,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUserName, tvUserEmail, tvUserGender, tvUserDob, tvUserPhone, tvUserAddress;
     private TextView tvNotLoggedIn;
     private View cardProfile;
+    private CheckBox cbReceiveEmail, cbReceiveSms, cbDarkMode;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -29,7 +31,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate layout
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Initialize views
@@ -44,42 +45,41 @@ public class ProfileFragment extends Fragment {
         tvUserPhone = view.findViewById(R.id.tvUserPhone);
         tvUserAddress = view.findViewById(R.id.tvUserAddress);
 
-        cardProfile = view.findViewById(R.id.cardProfile); // CardView ID in XML
-        tvNotLoggedIn = view.findViewById(R.id.tvNotLoggedIn); // TextView ID in XML
+        cbReceiveEmail = view.findViewById(R.id.cbReceiveEmail);
+        cbReceiveSms = view.findViewById(R.id.cbReceiveSms);
+        cbDarkMode = view.findViewById(R.id.cbDarkMode);
 
-        // Load SharedPreferences
+        cardProfile = view.findViewById(R.id.cardProfile);
+        tvNotLoggedIn = view.findViewById(R.id.tvNotLoggedIn);
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
-        // Update UI
         updateUI(isLoggedIn, sharedPreferences);
 
-        // Login button
+        // Login
         btnLogin.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
 
-        // Logout button
+        // Logout
         btnLogout.setOnClickListener(v -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isLoggedIn", false);
-            editor.clear();  // Clear all user data
+            editor.clear(); // Clear everything
             editor.apply();
             updateUI(false, sharedPreferences);
         });
 
-        // Toggle login (test button)
+        // Toggle login (test only)
         btnTestLogin.setOnClickListener(v -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             boolean isCurrentlyLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
             if (isCurrentlyLoggedIn) {
-                // Simulate logout
-                editor.putBoolean("isLoggedIn", false);
-                editor.clear();
+                editor.clear(); // logout and remove all
             } else {
-                // Simulate login with dummy data
+                // dummy login
                 editor.putBoolean("isLoggedIn", true);
                 editor.putString("userName", "John Doe");
                 editor.putString("userEmail", "john.doe@example.com");
@@ -87,14 +87,32 @@ public class ProfileFragment extends Fragment {
                 editor.putString("userDob", "01/01/1990");
                 editor.putString("userPhone", "0123456789");
                 editor.putString("userAddress", "123 Main Street");
+                // Optional default checkbox values
+                editor.putBoolean("cbReceiveEmail", true);
+                editor.putBoolean("cbReceiveSms", false);
+                editor.putBoolean("cbDarkMode", false);
             }
 
             editor.apply();
             updateUI(!isCurrentlyLoggedIn, sharedPreferences);
         });
 
+        // Save checkbox changes
+        cbReceiveEmail.setOnCheckedChangeListener((buttonView, isChecked) ->
+                sharedPreferences.edit().putBoolean("cbReceiveEmail", isChecked).apply()
+        );
+
+        cbReceiveSms.setOnCheckedChangeListener((buttonView, isChecked) ->
+                sharedPreferences.edit().putBoolean("cbReceiveSms", isChecked).apply()
+        );
+
+        cbDarkMode.setOnCheckedChangeListener((buttonView, isChecked) ->
+                sharedPreferences.edit().putBoolean("cbDarkMode", isChecked).apply()
+        );
+
         return view;
     }
+
 
     private void updateUI(boolean isLoggedIn, SharedPreferences sharedPreferences) {
         if (isLoggedIn) {
@@ -113,6 +131,9 @@ public class ProfileFragment extends Fragment {
             tvUserDob.setText("DOB: " + dob);
             tvUserPhone.setText("Phone: " + phone);
             tvUserAddress.setText("Address: " + address);
+            cbReceiveEmail.setChecked(sharedPreferences.getBoolean("cbReceiveEmail", false));
+            cbReceiveSms.setChecked(sharedPreferences.getBoolean("cbReceiveSms", false));
+            cbDarkMode.setChecked(sharedPreferences.getBoolean("cbDarkMode", false));
 
             // Show profile info
             cardProfile.setVisibility(View.VISIBLE);
