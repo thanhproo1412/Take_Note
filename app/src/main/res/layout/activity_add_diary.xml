@@ -26,19 +26,27 @@
             android:textSize="16sp" />
 
         <!-- Title Input -->
-
-        <!-- Content Label -->
         <EditText
             android:id="@+id/editTextDiaryTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:drawable/editbox_background"
             android:hint="Enter Title"
             android:inputType="text"
             android:minHeight="48dp"
             android:padding="12dp" />
 
+        <!-- Copy Title Button -->
+        <Button
+            android:id="@+id/buttonCopyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copy Title"
+            android:onClick="copyTitleToClipboard"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Content Label -->
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="wrap_content"
@@ -52,13 +60,22 @@
             android:id="@+id/editTextDiaryContent"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="8dp"
             android:background="@android:drawable/editbox_background"
             android:gravity="top|start"
             android:hint="Write something..."
             android:inputType="textMultiLine"
             android:minHeight="100dp"
             android:padding="12dp" />
+
+        <!-- Copy Content Button -->
+        <Button
+            android:id="@+id/buttonCopyContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copy Content"
+            android:onClick="copyContentToClipboard"
+            android:layout_marginBottom="24dp" />
 
         <!-- Save Button -->
         <Button

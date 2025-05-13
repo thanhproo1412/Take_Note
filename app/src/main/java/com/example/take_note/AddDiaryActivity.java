@@ -1,6 +1,9 @@
 package com.example.take_note;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -42,12 +45,10 @@ public class AddDiaryActivity extends AppCompatActivity {
         // Add TextWatcher to validate input
         TextWatcher inputWatcher = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -59,7 +60,6 @@ public class AddDiaryActivity extends AppCompatActivity {
         editTextDiaryContent.addTextChangedListener(inputWatcher);
     }
 
-    // Validate input and enable/disable Save button
     private void validateInputs() {
         String title = editTextDiaryTitle.getText().toString().trim();
         String content = editTextDiaryContent.getText().toString().trim();
@@ -76,7 +76,6 @@ public class AddDiaryActivity extends AppCompatActivity {
             editTextDiaryContent.setError(null);
         }
 
-        // Enable Save button only if both fields are valid
         buttonSave.setEnabled(!title.isEmpty() && content.length() >= 10);
     }
 
@@ -86,12 +85,10 @@ public class AddDiaryActivity extends AppCompatActivity {
         return true;
     }
 
-    // Save diary entry
     public void saveDiaryEntry(View view) {
         String title = editTextDiaryTitle.getText().toString().trim();
         String content = editTextDiaryContent.getText().toString().trim();
 
-        // Hide keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -139,6 +136,32 @@ public class AddDiaryActivity extends AppCompatActivity {
             finish();
         } else {
             Toast.makeText(this, "Error saving entry locally", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Copy title to clipboard
+    public void copyTitleToClipboard(View view) {
+        String title = editTextDiaryTitle.getText().toString().trim();
+        if (!title.isEmpty()) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Diary Title", title);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(this, "Title copied to clipboard", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Title is empty", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Copy content to clipboard
+    public void copyContentToClipboard(View view) {
+        String content = editTextDiaryContent.getText().toString().trim();
+        if (!content.isEmpty()) {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("Diary Content", content);
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(this, "Content copied to clipboard", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Content is empty", Toast.LENGTH_SHORT).show();
         }
     }
 }
