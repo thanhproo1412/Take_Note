@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
-    android:background="#FFFFFF"
     android:padding="16dp">
 
     <LinearLayout
@@ -42,9 +41,9 @@
             android:id="@+id/buttonCopyTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Copy Title"
+            android:layout_marginBottom="16dp"
             android:onClick="copyTitleToClipboard"
-            android:layout_marginBottom="16dp" />
+            android:text="Copy Title" />
 
         <!-- Content Label -->
         <TextView
@@ -73,9 +72,25 @@
             android:id="@+id/buttonCopyContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Copy Content"
+            android:layout_marginBottom="24dp"
             android:onClick="copyContentToClipboard"
-            android:layout_marginBottom="24dp" />
+            android:text="Copy Content" />
+
+        <Button
+            android:id="@+id/buttonAttachImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="openFilePicker"
+            android:text="Attach Image" />
+
+        <ImageView
+            android:id="@+id/imageViewAttachedImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:visibility="gone" />
 
         <!-- Save Button -->
         <Button
