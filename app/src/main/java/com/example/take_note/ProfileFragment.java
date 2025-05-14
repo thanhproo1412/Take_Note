@@ -4,25 +4,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
-import android.widget.CheckBox;
+
+import androidx.fragment.app.Fragment;
 
 public class ProfileFragment extends Fragment {
 
     private Button btnLogin, btnLogout;
     private ToggleButton btnTestLogin;
     private TextView tvUserName, tvUserEmail, tvUserGender, tvUserDob, tvUserPhone, tvUserAddress;
-    private TextView tvNotLoggedIn;
+    private TextView tvNotLoggedIn, tvEmotionLevel;
     private View cardProfile;
     private CheckBox cbReceiveEmail, cbReceiveSms, cbDarkMode;
+    private SeekBar seekBarEmotion;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -52,6 +53,9 @@ public class ProfileFragment extends Fragment {
         cardProfile = view.findViewById(R.id.cardProfile);
         tvNotLoggedIn = view.findViewById(R.id.tvNotLoggedIn);
 
+        tvEmotionLevel = view.findViewById(R.id.tvEmotionLevel);
+        seekBarEmotion = view.findViewById(R.id.seekBarEmotion);
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
@@ -66,18 +70,18 @@ public class ProfileFragment extends Fragment {
         // Logout
         btnLogout.setOnClickListener(v -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear(); // Clear everything
+            editor.clear();
             editor.apply();
             updateUI(false, sharedPreferences);
         });
 
-        // Toggle login (test only)
+        // Test login
         btnTestLogin.setOnClickListener(v -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             boolean isCurrentlyLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
 
             if (isCurrentlyLoggedIn) {
-                editor.clear(); // logout and remove all
+                editor.clear(); // logout
             } else {
                 // dummy login
                 editor.putBoolean("isLoggedIn", true);
@@ -87,17 +91,17 @@ public class ProfileFragment extends Fragment {
                 editor.putString("userDob", "01/01/1990");
                 editor.putString("userPhone", "0123456789");
                 editor.putString("userAddress", "123 Main Street");
-                // Optional default checkbox values
                 editor.putBoolean("cbReceiveEmail", true);
                 editor.putBoolean("cbReceiveSms", false);
                 editor.putBoolean("cbDarkMode", false);
+                editor.putInt("emotionLevel", 50); // Default level
             }
 
             editor.apply();
             updateUI(!isCurrentlyLoggedIn, sharedPreferences);
         });
 
-        // Save checkbox changes
+        // Checkbox listeners
         cbReceiveEmail.setOnCheckedChangeListener((buttonView, isChecked) ->
                 sharedPreferences.edit().putBoolean("cbReceiveEmail", isChecked).apply()
         );
@@ -110,9 +114,25 @@ public class ProfileFragment extends Fragment {
                 sharedPreferences.edit().putBoolean("cbDarkMode", isChecked).apply()
         );
 
+        // SeekBar listener
+        seekBarEmotion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvEmotionLevel.setText("Emotion Sharing Level: " + progress);
+                sharedPreferences.edit().putInt("emotionLevel", progress).apply();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
         return view;
     }
-
 
     private void updateUI(boolean isLoggedIn, SharedPreferences sharedPreferences) {
         if (isLoggedIn) {
@@ -123,6 +143,7 @@ public class ProfileFragment extends Fragment {
             String dob = sharedPreferences.getString("userDob", "N/A");
             String phone = sharedPreferences.getString("userPhone", "N/A");
             String address = sharedPreferences.getString("userAddress", "N/A");
+            int emotionLevel = sharedPreferences.getInt("emotionLevel", 50);
 
             // Set data
             tvUserName.setText(userName);
@@ -134,18 +155,17 @@ public class ProfileFragment extends Fragment {
             cbReceiveEmail.setChecked(sharedPreferences.getBoolean("cbReceiveEmail", false));
             cbReceiveSms.setChecked(sharedPreferences.getBoolean("cbReceiveSms", false));
             cbDarkMode.setChecked(sharedPreferences.getBoolean("cbDarkMode", false));
+            tvEmotionLevel.setText("Emotion Sharing Level: " + emotionLevel);
+            seekBarEmotion.setProgress(emotionLevel);
 
-            // Show profile info
+            // Show profile
             cardProfile.setVisibility(View.VISIBLE);
             tvNotLoggedIn.setVisibility(View.GONE);
-
             btnLogin.setVisibility(View.GONE);
             btnLogout.setVisibility(View.VISIBLE);
         } else {
-            // Hide profile and show message
             cardProfile.setVisibility(View.GONE);
             tvNotLoggedIn.setVisibility(View.VISIBLE);
-
             btnLogin.setVisibility(View.VISIBLE);
             btnLogout.setVisibility(View.GONE);
         }
