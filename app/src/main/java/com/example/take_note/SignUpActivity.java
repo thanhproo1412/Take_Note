@@ -2,6 +2,8 @@ package com.example.take_note;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,6 +23,21 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
+
+        // Handle the touch event on the username field to show the character picker dialog
+        editTextUsername.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_END = 2; // Index for drawableRight
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (editTextUsername.getRight() - editTextUsername.getCompoundDrawables()[DRAWABLE_END].getBounds().width())) {
+                        showCharacterPicker();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
 
         // Initialize Sign Up button
         findViewById(R.id.btnSignup).setOnClickListener(new View.OnClickListener() {
@@ -66,5 +83,25 @@ public class SignUpActivity extends AppCompatActivity {
     private void navigateToLogin() {
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    // Show CharacterPickerDialog when user clicks on the username field icon
+    private void showCharacterPicker() {
+        // Characters to choose from
+        final String specialChars = "@#$%&*";
+
+        // Create a simple alert dialog to pick characters
+        final CharSequence[] items = specialChars.split("");
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Pick a Special Character")
+                .setItems(items, (dialog, which) -> {
+                    // Insert the selected character at the current cursor position in username field
+                    String selectedChar = items[which].toString();
+                    int cursorPos = editTextUsername.getSelectionStart();
+                    Editable text = editTextUsername.getText();
+                    text.insert(cursorPos, selectedChar);
+                })
+                .show();
     }
 }

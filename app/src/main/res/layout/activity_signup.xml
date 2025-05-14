@@ -1,150 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    android:layout_height="match_parent">
 
-    <!-- Scrollable Content Area -->
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?attr/colorPrimary"-->
+<!--        android:elevation="4dp"-->
+<!--        android:title="Sign Up"-->
+<!--        android:titleTextColor="@android:color/white" />-->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:padding="16dp">
+        android:layout_marginTop="84dp"
+        android:background="#FFFFFF"
+        android:padding="24dp">
 
-        <TableLayout
-            android:id="@+id/tableLayout"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="1">
+            android:orientation="vertical">
 
-            <!-- Username Field -->
-            <TableRow
+            <!-- Username -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Username"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextUsername"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:drawableEnd="@android:drawable/ic_menu_edit"
+                android:drawableRight="@android:drawable/ic_menu_edit"
+                android:focusableInTouchMode="true"
+                android:hint="Enter your username"
+                android:inputType="textPersonName"
+                android:padding="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/editTextUsername"
-                    android:paddingEnd="8dp"
-                    android:text="Username" />
+            <!-- Email -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Email"
+                android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/editTextUsername"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Enter your username"
-                    android:inputType="text"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </TableRow>
-
-            <!-- Email Field -->
-            <TableRow
+            <EditText
+                android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:hint="Enter your email"
+                android:inputType="textEmailAddress"
+                android:padding="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/editTextEmail"
-                    android:paddingEnd="8dp"
-                    android:text="Email" />
+            <!-- Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Password"
+                android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/editTextEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Enter your email"
-                    android:inputType="textEmailAddress"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </TableRow>
-
-            <!-- Password Field -->
-            <TableRow
+            <EditText
+                android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:hint="Enter your password"
+                android:inputType="textPassword"
+                android:padding="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/editTextPassword"
-                    android:paddingEnd="8dp"
-                    android:text="Password" />
+            <!-- Confirm Password -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Confirm Password"
+                android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/editTextPassword"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Enter your password"
-                    android:inputType="textPassword"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </TableRow>
-
-            <!-- Confirm Password Field -->
-            <TableRow
+            <EditText
+                android:id="@+id/editTextConfirmPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:hint="Confirm your password"
+                android:inputType="textPassword"
+                android:padding="12dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/editTextConfirmPassword"
-                    android:paddingEnd="8dp"
-                    android:text="Confirm Password" />
-
-                <EditText
-                    android:id="@+id/editTextConfirmPassword"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Confirm your password"
-                    android:inputType="textPassword"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </TableRow>
-
-            <!-- Submit Button -->
-            <TableRow
+            <!-- Sign Up Button -->
+            <Button
+                android:id="@+id/btnSignup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@android:color/holo_blue_light"
+                android:text="Sign Up"
+                android:textColor="@android:color/white" />
 
-                <Button
-                    android:id="@+id/btnSignup"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/holo_blue_light"
-                    android:text="Sign Up"
-                    android:textColor="@android:color/white" />
-            </TableRow>
-
-            <!-- Login Button -->
-            <TableRow
+            <!-- Login Redirect Button -->
+            <Button
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_span="2"
-                    android:gravity="center"
-                    android:text="Already have an account?"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="Login"
-                    android:textColor="@android:color/holo_blue_light" />
-            </TableRow>
-
-        </TableLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:text="Already have an account? Login"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
     </ScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

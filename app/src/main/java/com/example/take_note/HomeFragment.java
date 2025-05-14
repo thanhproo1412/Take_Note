@@ -1,29 +1,19 @@
 package com.example.take_note;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
+import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private NoteAdapter adapter;
-    private ArrayList<Note> noteList;
-    private NoteDatabaseHelper dbHelper;
-    private FloatingActionButton fabAddEntry;
-    private TextView tvNoNotesMessage;
-    private TextView tvLoginMessage;
+    private Button btnSelectDate;
+    private TextView tvSelectedDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,75 +21,33 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // Initialize views
-        recyclerView = view.findViewById(R.id.recyclerViewNotes);
-        tvLoginMessage = view.findViewById(R.id.tvLoginMessage);
-        tvNoNotesMessage = view.findViewById(R.id.tvNoNotesMessage);
-        fabAddEntry = view.findViewById(R.id.fab_add_entry);
+        btnSelectDate = view.findViewById(R.id.btnSelectDate);
+        tvSelectedDate = view.findViewById(R.id.tvNoNotesMessage); // You can update this to any TextView to display selected date
 
-        // Set up RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // Initialize database and note list
-        dbHelper = new NoteDatabaseHelper(getContext());
-        noteList = new ArrayList<>();
-        adapter = new NoteAdapter(noteList);
-        recyclerView.setAdapter(adapter);
-
-        // Check login status and load notes
-        checkLoginStatus();
-
-        // Floating action button click to add a new note
-        fabAddEntry.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AddDiaryActivity.class);
-            startActivity(intent);
-        });
-
-        // Navigate to LoginActivity when user clicks "Click here to login"
-        tvLoginMessage.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
-        });
+        // Set the OnClickListener for the "Select Date" button
+        btnSelectDate.setOnClickListener(v -> showDatePickerDialog());
 
         return view;
     }
 
-    private void checkLoginStatus() {
-        if (!isLoggedIn()) {
-            tvLoginMessage.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            tvNoNotesMessage.setVisibility(View.GONE);
-        } else {
-            tvLoginMessage.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-            loadNotes();
-        }
-    }
+    private void showDatePickerDialog() {
+        // Get the current date
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-    private boolean isLoggedIn() {
-        return getActivity().getSharedPreferences("user_preferences", getContext().MODE_PRIVATE)
-                .getBoolean("is_logged_in", false);
-    }
+        // Show the DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                getContext(),
+                (view, year1, month1, dayOfMonth1) -> {
+                    // Format and display the selected date
+                    String selectedDate = dayOfMonth1 + "/" + (month1 + 1) + "/" + year1;
+                    tvSelectedDate.setText("Selected Date: " + selectedDate);
+                },
+                year, month, dayOfMonth
+        );
 
-    private void loadNotes() {
-        noteList.clear(); // Clear the current list
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("notes", null, null, null, null, null, "id DESC");
-
-        if (cursor.getCount() == 0) {
-            tvNoNotesMessage.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-        } else {
-            tvNoNotesMessage.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
-
-            while (cursor.moveToNext()) {
-                int id = cursor.getInt(0);
-                String title = cursor.getString(1);
-                String content = cursor.getString(2);
-                noteList.add(new Note(id, title, content));
-            }
-            cursor.close();
-            adapter.notifyDataSetChanged();
-        }
+        datePickerDialog.show();
     }
 }
