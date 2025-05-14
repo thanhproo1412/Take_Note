@@ -1,8 +1,10 @@
 package com.example.take_note;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,8 +30,11 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_profile) {
                 selectedFragment = new ProfileFragment();
             } else if (itemId == R.id.nav_community) {
-                selectedFragment = new CommunityFragment();  // Thêm fragment cộng đồng
+                selectedFragment = new CommunityFragment();
+            } else if (itemId == R.id.nav_ai_message) {
+                selectedFragment = new AiMessageFragment();
             }
+
 
             if (selectedFragment != null) {
                 loadFragment(selectedFragment);

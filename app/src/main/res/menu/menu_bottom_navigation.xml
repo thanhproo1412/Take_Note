@@ -4,9 +4,9 @@
         android:icon="@drawable/ic_home"
         android:title="Home" />
     <item
-        android:id="@+id/nav_login"
-        android:icon="@drawable/ic_notes"
-        android:title="Notes" />
+        android:id="@+id/nav_ai_message"
+        android:icon="@drawable/ai_icon"
+        android:title="AI Helper" />
     <item
         android:id="@+id/nav_community"
         android:icon="@drawable/ic_community"
