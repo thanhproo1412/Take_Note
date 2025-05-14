@@ -110,9 +110,28 @@ public class ProfileFragment extends Fragment {
                 sharedPreferences.edit().putBoolean("cbReceiveSms", isChecked).apply()
         );
 
-        cbDarkMode.setOnCheckedChangeListener((buttonView, isChecked) ->
-                sharedPreferences.edit().putBoolean("cbDarkMode", isChecked).apply()
-        );
+        cbDarkMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Show confirmation dialog
+                new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                        .setTitle("Enable Dark Mode")
+                        .setMessage("Are you sure you want to enable dark mode?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            sharedPreferences.edit().putBoolean("cbDarkMode", true).apply();
+                            dialog.dismiss();
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            cbDarkMode.setChecked(false); // Revert the change
+                            dialog.dismiss();
+                        })
+                        .setCancelable(false)
+                        .show();
+            } else {
+                // Directly disable without confirmation
+                sharedPreferences.edit().putBoolean("cbDarkMode", false).apply();
+            }
+        });
+
 
         // SeekBar listener
         seekBarEmotion.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
