@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
@@ -30,8 +31,9 @@ public class HomeFragment extends Fragment {
     private TextView tvNoNotesMessage;
     private TextView tvLoginMessage;
 
-    // Declare buttons
+    // Declare buttons and ProgressBar
     private Button btnDatePicker, btnTimePicker, btnDateTimePicker;
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment {
         tvLoginMessage = view.findViewById(R.id.tvLoginMessage);
         tvNoNotesMessage = view.findViewById(R.id.tvNoNotesMessage);
         fabAddEntry = view.findViewById(R.id.fab_add_entry);
+        progressBar = view.findViewById(R.id.progressBar);
 
         // Initialize buttons
         btnDatePicker = view.findViewById(R.id.btnDatePicker);
@@ -103,6 +106,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadNotes() {
+        // Show ProgressBar while loading notes
+        progressBar.setVisibility(View.VISIBLE);
+
         noteList.clear(); // Clear the current list
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query("notes", null, null, null, null, null, "id DESC");
@@ -110,6 +116,7 @@ public class HomeFragment extends Fragment {
         if (cursor.getCount() == 0) {
             tvNoNotesMessage.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE); // Hide ProgressBar when no notes
         } else {
             tvNoNotesMessage.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
@@ -122,6 +129,7 @@ public class HomeFragment extends Fragment {
             }
             cursor.close();
             adapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE); // Hide ProgressBar after loading notes
         }
     }
 
@@ -133,9 +141,7 @@ public class HomeFragment extends Fragment {
                     String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
                     Toast.makeText(getContext(), "Selected Date: " + selectedDate, Toast.LENGTH_SHORT).show();
                 },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
 
@@ -147,9 +153,7 @@ public class HomeFragment extends Fragment {
                     String selectedTime = hourOfDay + ":" + minute;
                     Toast.makeText(getContext(), "Selected Time: " + selectedTime, Toast.LENGTH_SHORT).show();
                 },
-                calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true);
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
         timePickerDialog.show();
     }
 
@@ -159,20 +163,18 @@ public class HomeFragment extends Fragment {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
                 (view, year, month, dayOfMonth) -> {
                     String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
-                    TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
-                            (view1, hourOfDay, minute) -> {
-                                String selectedTime = hourOfDay + ":" + minute;
-                                String selectedDateTime = selectedDate + " " + selectedTime;
-                                Toast.makeText(getContext(), "Selected DateTime: " + selectedDateTime, Toast.LENGTH_SHORT).show();
-                            },
-                            calendar.get(Calendar.HOUR_OF_DAY),
-                            calendar.get(Calendar.MINUTE),
-                            true);
-                    timePickerDialog.show();
+                    Toast.makeText(getContext(), "Selected Date: " + selectedDate, Toast.LENGTH_SHORT).show();
                 },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
+                calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                (view, hourOfDay, minute) -> {
+                    String selectedTime = hourOfDay + ":" + minute;
+                    Toast.makeText(getContext(), "Selected Time: " + selectedTime, Toast.LENGTH_SHORT).show();
+                },
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), false);
+
         datePickerDialog.show();
+        timePickerDialog.show();
     }
 }
