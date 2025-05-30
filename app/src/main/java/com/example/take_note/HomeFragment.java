@@ -32,7 +32,6 @@ public class HomeFragment extends Fragment {
     private TextView tvLoginMessage;
 
     // Declare buttons and ProgressBar
-    private Button btnDatePicker, btnTimePicker, btnDateTimePicker;
     private ProgressBar progressBar;
 
     @Override
@@ -46,11 +45,6 @@ public class HomeFragment extends Fragment {
         tvNoNotesMessage = view.findViewById(R.id.tvNoNotesMessage);
         fabAddEntry = view.findViewById(R.id.fab_add_entry);
         progressBar = view.findViewById(R.id.progressBar);
-
-        // Initialize buttons
-        btnDatePicker = view.findViewById(R.id.btnDatePicker);
-        btnTimePicker = view.findViewById(R.id.btnTimePicker);
-        btnDateTimePicker = view.findViewById(R.id.btnDateTimePicker);
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -75,15 +69,6 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
         });
-
-        // DatePicker Button Click
-        btnDatePicker.setOnClickListener(v -> showDatePickerDialog());
-
-        // TimePicker Button Click
-        btnTimePicker.setOnClickListener(v -> showTimePickerDialog());
-
-        // DateTimePicker Button Click
-        btnDateTimePicker.setOnClickListener(v -> showDateTimePickerDialog());
 
         return view;
     }
