@@ -41,7 +41,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(CREATE_USERS_TABLE);
 
-        // Thêm tài khoản mặc định admin123
+        // Default account: admin123
         ContentValues values = new ContentValues();
         values.put(COLUMN_USERNAME, "admin123");
         values.put(COLUMN_EMAIL, "admin@example.com");
@@ -85,8 +85,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USERNAME, username);
         values.put(COLUMN_EMAIL, email);
         values.put(COLUMN_PASSWORD, password);
-        // Có thể thêm default cho các cột mới
-        values.put(COLUMN_NAME, username); // hoặc để trống
+        values.put(COLUMN_NAME, username);
         values.put(COLUMN_GENDER, "");
         values.put(COLUMN_DOB, "");
         values.put(COLUMN_PHONE, "");
@@ -95,9 +94,6 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
-
-    // ✅ Get user info by username
-// Thêm vào cuối class UserDatabaseHelper
     public User getUserByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + "=?", new String[]{username});

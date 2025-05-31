@@ -3,7 +3,7 @@ package com.example.take_note;
 public class Post {
     private String userName;
     private String content;
-    private int imageResId;  // resource ID (nếu có)
+    private int imageResId;
     private String time;
 
     public Post(String userName, String content, int imageResId, String time) {

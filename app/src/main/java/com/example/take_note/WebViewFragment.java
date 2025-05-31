@@ -22,10 +22,9 @@ public class WebViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_webview, container, false);
 
         webView = view.findViewById(R.id.webView);
-        webView.setWebViewClient(new WebViewClient()); // Load trong app thay vì mở trình duyệt ngoài
-        webView.getSettings().setJavaScriptEnabled(true); // Cho phép JS nếu web yêu cầu
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
 
-        // Load trang web mong muốn
         webView.loadUrl("https://www.google.com");
 
         return view;

@@ -47,9 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
         findViewById(R.id.btnLogin).setOnClickListener(v -> navigateToLogin());
     }
 
-    /**
-     * Handles the signup logic: validation, duplicate check, DB insertion
-     */
     private void signup() {
         String username = editTextUsername.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();

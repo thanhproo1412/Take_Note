@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <!-- TextView thông báo login -->
+        <!-- TextView login notification -->
         <TextView
             android:id="@+id/tvLoginMessage"
             android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Fragment chứa nội dung chính -->
+        <!-- Fragment main content -->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainer"
             android:layout_width="0dp"

@@ -78,8 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         if (isAuthenticated) {
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
 
-            // Giả sử bạn có thể lấy thông tin user từ database, hoặc tạm thời dùng dummy data
-            // Ví dụ lấy thông tin user từ database helper (bạn cần tự hiện thực method này)
             User user = dbHelper.getUserByUsername(username);
 
             SharedPreferences sharedPreferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
@@ -92,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("userDob", user.getDob() != null ? user.getDob() : "N/A");
             editor.putString("userPhone", user.getPhone() != null ? user.getPhone() : "N/A");
             editor.putString("userAddress", user.getAddress() != null ? user.getAddress() : "N/A");
-
-            // Các tùy chọn mặc định
             editor.putBoolean("cbReceiveEmail", false);
             editor.putBoolean("cbReceiveSms", false);
             editor.putBoolean("cbDarkMode", false);

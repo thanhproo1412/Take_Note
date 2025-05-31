@@ -28,7 +28,7 @@ public class CommunityFragment extends Fragment {
         recyclerViewPosts = rootView.findViewById(R.id.recyclerViewPosts);
         btnPost = rootView.findViewById(R.id.btnPost);
 
-        // Tạo danh sách các bài viết
+        // Create sample post list
         ArrayList<Post> mockPosts = new ArrayList<>();
         mockPosts.add(new Post("Mai Anh", "Hôm nay thật đẹp trời ☀️", R.drawable.image1, "5 phút trước"));
         mockPosts.add(new Post("Nguyễn Minh", "Vừa hoàn thành bài tập xong 💪", 0, "30 phút trước"));
@@ -39,11 +39,11 @@ public class CommunityFragment extends Fragment {
         PostsAdapter adapter = new PostsAdapter(mockPosts);
         recyclerViewPosts.setAdapter(adapter);  // Set Adapter only once
 
-        // Button để thêm bài mới
+        // Button add new post
         btnPost.setOnClickListener(v -> {
             // Simulate adding a new post
             Toast.makeText(getContext(), "Đang đăng bài...", Toast.LENGTH_SHORT).show();
-            // Bạn có thể thay thế bằng cách mở một Activity để người dùng nhập bài viết mới
+            // Có thể update
         });
 
         return rootView;
