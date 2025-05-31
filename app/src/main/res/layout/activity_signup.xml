@@ -1,119 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="?attr/colorPrimary"-->
-<!--        android:elevation="4dp"-->
-<!--        android:title="Sign Up"-->
-<!--        android:titleTextColor="@android:color/white" />-->
-
-    <ScrollView
+    <EditText
+        android:id="@+id/editTextUsername"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="84dp"
-        android:background="#FFFFFF"
-        android:padding="24dp">
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/ic_special_char"
+        android:hint="Username"
+        android:minHeight="48dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp" />
 
-            <!-- Username -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Username"
-                android:textSize="16sp" />
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
 
-            <EditText
-                android:id="@+id/editTextUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/editbox_background"
-                android:drawableEnd="@android:drawable/ic_menu_edit"
-                android:drawableRight="@android:drawable/ic_menu_edit"
-                android:focusableInTouchMode="true"
-                android:hint="Enter your username"
-                android:inputType="textPersonName"
-                android:padding="12dp" />
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
 
-            <!-- Email -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Email"
-                android:textSize="16sp" />
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up" />
 
-            <EditText
-                android:id="@+id/editTextEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Enter your email"
-                android:inputType="textEmailAddress"
-                android:padding="12dp" />
-
-            <!-- Password -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Password"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/editTextPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Enter your password"
-                android:inputType="textPassword"
-                android:padding="12dp" />
-
-            <!-- Confirm Password -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Confirm Password"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/editTextConfirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:drawable/editbox_background"
-                android:hint="Confirm your password"
-                android:inputType="textPassword"
-                android:padding="12dp" />
-
-            <!-- Sign Up Button -->
-            <Button
-                android:id="@+id/btnSignup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="@android:color/holo_blue_light"
-                android:text="Sign Up"
-                android:textColor="@android:color/white" />
-
-            <!-- Login Redirect Button -->
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="@android:color/darker_gray"
-                android:text="Already have an account? Login"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </ScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Login" />
+</LinearLayout>

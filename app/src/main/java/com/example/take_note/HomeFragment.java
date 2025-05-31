@@ -78,12 +78,15 @@ public class HomeFragment extends Fragment {
             tvLoginMessage.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             tvNoNotesMessage.setVisibility(View.GONE);
+            fabAddEntry.setVisibility(View.GONE); // Ẩn nút thêm ghi chú nếu chưa đăng nhập
         } else {
             tvLoginMessage.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+            fabAddEntry.setVisibility(View.VISIBLE); // Hiện nút ghi chú
             loadNotes();
         }
     }
+
 
     private boolean isLoggedIn() {
         return getActivity().getSharedPreferences("user_preferences", getContext().MODE_PRIVATE)
@@ -91,32 +94,32 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadNotes() {
-        // Show ProgressBar while loading notes
         progressBar.setVisibility(View.VISIBLE);
 
-        noteList.clear(); // Clear the current list
+        noteList.clear();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.query("notes", null, null, null, null, null, "id DESC");
+        Cursor cursor = db.query(NoteDatabaseHelper.TABLE_NAME, null, null, null, null, null, NoteDatabaseHelper.COLUMN_ID + " DESC");
 
         if (cursor.getCount() == 0) {
             tvNoNotesMessage.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.GONE); // Hide ProgressBar when no notes
+            progressBar.setVisibility(View.GONE);
         } else {
             tvNoNotesMessage.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
             while (cursor.moveToNext()) {
-                int id = cursor.getInt(0);
-                String title = cursor.getString(1);
-                String content = cursor.getString(2);
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow(NoteDatabaseHelper.COLUMN_ID));
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(NoteDatabaseHelper.COLUMN_TITLE));
+                String content = cursor.getString(cursor.getColumnIndexOrThrow(NoteDatabaseHelper.COLUMN_CONTENT));
                 noteList.add(new Note(id, title, content));
             }
             cursor.close();
             adapter.notifyDataSetChanged();
-            progressBar.setVisibility(View.GONE); // Hide ProgressBar after loading notes
+            progressBar.setVisibility(View.GONE);
         }
     }
+
 
     // Show DatePickerDialog
     private void showDatePickerDialog() {

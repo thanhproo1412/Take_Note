@@ -56,8 +56,8 @@ public class ProfileFragment extends Fragment {
         tvEmotionLevel = view.findViewById(R.id.tvEmotionLevel);
         seekBarEmotion = view.findViewById(R.id.seekBarEmotion);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        boolean isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_preferences", Context.MODE_PRIVATE);
+        boolean isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false);
 
         updateUI(isLoggedIn, sharedPreferences);
 
@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment {
                 editor.clear(); // logout
             } else {
                 // dummy login
-                editor.putBoolean("isLoggedIn", true);
+                editor.putBoolean("is_logged_in", true);
                 editor.putString("userName", "John Doe");
                 editor.putString("userEmail", "john.doe@example.com");
                 editor.putString("userGender", "Male");

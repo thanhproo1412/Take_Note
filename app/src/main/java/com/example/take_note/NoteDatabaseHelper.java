@@ -26,13 +26,22 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Called when DB is created for the first time
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE);
+
+        // ✅ Insert default notes
+        long now = System.currentTimeMillis();
+        db.execSQL("INSERT INTO " + TABLE_NAME + " (" + COLUMN_TITLE + ", " + COLUMN_CONTENT + ", " + COLUMN_CREATED_AT + ") " +
+                "VALUES ('Welcome to DiaryNote!', 'This is your first note. You can write anything here.', " + now + ");");
+
+        db.execSQL("INSERT INTO " + TABLE_NAME + " (" + COLUMN_TITLE + ", " + COLUMN_CONTENT + ", " + COLUMN_CREATED_AT + ") " +
+                "VALUES ('Tips', 'Click the + button to add a new note. Swipe left to delete a note.', " + now + ");");
+
+        db.execSQL("INSERT INTO " + TABLE_NAME + " (" + COLUMN_TITLE + ", " + COLUMN_CONTENT + ", " + COLUMN_CREATED_AT + ") " +
+                "VALUES ('Privacy', 'Your notes are stored locally on your device.', " + now + ");");
     }
 
-    // Called when DB version is incremented
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if it exists and recreate
